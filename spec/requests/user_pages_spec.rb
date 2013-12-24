@@ -20,6 +20,16 @@ describe "User Pages" do
             it "should not create a user" do
                 expect { click_button submit }.not_to change(User, :count)
             end
+
+        describe "after blank submission" do
+            before { click_button submit }
+            it { should have_title('Sign up')}
+            it { should have_selector('li', "Password can't be blank") }
+            it { should have_selector('li', "Password is too short (minimum is 6 characters)") }
+            it { should have_selector('li', "Name can't be blank") }
+            it { should have_selector('li', "Email can't be blank") }
+            it { should have_selector('li', "Email is invalid") }
+        end
         end
 
         describe "with valid info" do
@@ -32,6 +42,12 @@ describe "User Pages" do
             
             it "should create a user" do
                 expect { click_button submit }.to change(User, :count).by(1)
+            end
+            describe "after saving ther user" do
+                before { click_button submit }
+                let(:user) { User.find_by(email: 'user@example.com') }
+                it { should have_title(user.name) }
+                it { should have_selector('div.alert.alert-success', text: "Welcome") }
             end
         end
     end
