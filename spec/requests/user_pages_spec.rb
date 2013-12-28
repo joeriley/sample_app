@@ -24,11 +24,11 @@ describe "User Pages" do
         describe "after blank submission" do
             before { click_button submit }
             it { should have_title('Sign up')}
-            it { should have_selector('li', "Password can't be blank") }
-            it { should have_selector('li', "Password is too short (minimum is 6 characters)") }
-            it { should have_selector('li', "Name can't be blank") }
-            it { should have_selector('li', "Email can't be blank") }
-            it { should have_selector('li', "Email is invalid") }
+            it { should have_error_message_listing("Password can't be blank") }
+            it { should have_error_message_listing("Password is too short (minimum is 6 characters)") }
+            it { should have_error_message_listing("Name can't be blank") }
+            it { should have_error_message_listing("Email can't be blank") }
+            it { should have_error_message_listing("Email is invalid") }
         end
         end
 
